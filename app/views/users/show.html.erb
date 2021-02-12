@@ -1,7 +1,12 @@
-<h1><%= @user.name %>のページ</h1>
-<p>メールアドレス: <%= @user.email %></p>
-
-<p>画像: <%= image_tag @user.image.url, size: '50x50' %></p>
-
-
-<%= link_to 'Edit', edit_user_path %>
+<h1><%= @user.name %></h1>
+<p><%= image_tag(@user.image.url) if @user.image && @user.image.url %></p>
+<p>mail_adress: <%= @user.email %></p>
+<%= link_to 'profile_edit', edit_user_path %>
+<h2>Favorites list</h2>
+<div class="field">
+<% @favorite_list.each do |picture| %>
+  <%= image_tag picture.image.to_s %>
+<p><%= picture.content %></p>
+<p><%= button_to "Good!Cancel",favorite_path(id: current_user.favorites.find_by(picture_id: picture.id)),method: :delete %></p>
+  <% end %>
+</div>

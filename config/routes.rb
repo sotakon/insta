@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  mount LetterOpenerWeb::Engine, at: "/letter_opener" if Rails.env.development?
   get 'sessions/new'
   get '/instas', to: 'instas#index' #追記する
   resources :pictures do
@@ -6,7 +7,7 @@ Rails.application.routes.draw do
       post :confirm
     end
   end
-  resources :users, only: [:new, :create, :show, :edit, :update]
+  resources :users
+  resources :favorites
   resources :sessions, only: [:new, :create, :destroy]
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

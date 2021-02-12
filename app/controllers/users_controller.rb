@@ -6,8 +6,8 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
+      session[:user_id] = @user.id
       redirect_to user_path(@user.id)
-      # 保存の成功した場合の処理
     else
       render :new
     end
@@ -15,6 +15,9 @@ class UsersController < ApplicationController
 
   def show
     @user = User.find(params[:id])
+    @pictures = @user.pictures
+    favorites = Favorite.where(user_id: current_user.id).pluck(:picture_id)
+    @favorite_list = Picture.find(favorites)
   end
 
   def edit
@@ -29,6 +32,14 @@ class UsersController < ApplicationController
     else
       render 'edit'
     end
+  end
+
+  def destroy
+    @user = User.find(params[:id])
+    @pictures = @user.pictures
+    favorites = Favorite.where(user_id: current_user.id).pluck(:picture_id)
+    @favorite_list = Picture.find(favorites)
+    @favorite_list.destroy
   end
 
   private
