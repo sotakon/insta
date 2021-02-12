@@ -3,7 +3,6 @@
     <% @pictures.each do |picture| %>
      <tr>
        <td><%= picture.user.name %>&nbsp;<%= picture.content %></td>
-       <td></td>
      </tr>
      <tr>
        <td><%= image_tag picture.image.to_s %></td>
